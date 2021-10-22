@@ -127,13 +127,27 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DomainModels\Address.cs" />
+    <Compile Include="DomainModels\Basket.cs" />
+    <Compile Include="DomainModels\BasketLine.cs" />
+    <Compile Include="DomainModels\OrderLine.cs" />
+    <Compile Include="DomainModels\Delivery.cs" />
+    <Compile Include="DomainModels\Order.cs" />
+    <Compile Include="DomainModels\Product.cs" />
+    <Compile Include="DomainModels\Category.cs" />
+    <Compile Include="DomainModels\ShopContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\WebShopDb.mdf" />
+    <Content Include="App_Data\WebShopDb_log.ldf">
+      <DependentUpon>WebShopDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -169,9 +183,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shop\CreateShope.cshtml" />
+    <Content Include="Views\Shop\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
