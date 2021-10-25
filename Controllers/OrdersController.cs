@@ -26,33 +26,31 @@ namespace WebShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateOrders()
+        public ActionResult Create()
         {
-            ViewBag.Deliveries = new SelectList(ShopContext.Deliveries, "Id", "TotalPrice");
+            ViewBag.Deliveries = new SelectList(ShopContext.Deliveries, "Id", "Name");
             return View();
 
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]   // ? против злому сайта ? // паролі і логіни 
-        public ActionResult CreateOrders(OrderInputModel model) //?? щоб показувати на екран те що ми вибрали ? 
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(OrderInputModel model)
         {
             if (ModelState.IsValid)
             {
                 var order = new Order();
                 order.TotalPrice = model.TotalPrice;
 
-                var db = new ShopContext();
-                db.Orders.Add(order);
-                db.SaveChanges();
+                using (var db = new ShopContext())
+                {
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Orders");
             }
-               return View(model);
+            return View(model);
         }
-
-
-
-
-
     }
 }

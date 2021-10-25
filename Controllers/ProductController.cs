@@ -18,12 +18,20 @@ namespace WebShop.Controllers
             }
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string query)
         {
-            var db = new ShopContext();                       
+            query = PrepareSeachQuery(query);
+            
+            using(var db = new ShopContext())
+            {
+                var products = string.IsNullOrEmpty(query) ? db.Products.ToList() : db.Products.Where(p => p.Name.Contains(query)).ToList();
+                return View(products);
+            }
+        }
 
-            var products = db.Products.ToList();             
-            return View(products);
+        private string PrepareSeachQuery(string query)
+        {
+            return query?.Trim().ToLower();
         }
 
         [HttpGet]
@@ -42,10 +50,16 @@ namespace WebShop.Controllers
             {
                 var product = new Product();
                 product.Name = model.Name;
+                product.Description = model.Description;
+                product.Price = model.Price;
+                product.Producer = model.Producer;
+                product.CategoryId = model.CategoryId;
 
-                var db = new ShopContext();
-                db.Products.Add(product);
-                db.SaveChanges();
+                using(var db = new ShopContext())
+                {
+                    db.Products.Add(product);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             return View(model);

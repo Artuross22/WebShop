@@ -198,7 +198,7 @@
     <Content Include="Views\Delivery\Delivery.cshtml" />
     <Content Include="Views\Delivery\CreateDelivery.cshtml" />
     <Content Include="Views\Orders\Orders.cshtml" />
-    <Content Include="Views\Orders\CreateOrders.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
