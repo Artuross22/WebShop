@@ -8,7 +8,7 @@ using WebShop.ViewModels;
 
 namespace WebShop.Controllers
 {
-    public class ShopController : Controller
+    public class CategoriesController : Controller
     {
         protected ShopContext ShopContext
         {

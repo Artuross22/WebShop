@@ -126,8 +126,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="DomainModels\Address.cs" />
     <Compile Include="DomainModels\Basket.cs" />
     <Compile Include="DomainModels\BasketLine.cs" />
@@ -142,6 +144,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CategoryInputModel.cs" />
+    <Compile Include="ViewModels\DeliveryInputModel.cs" />
+    <Compile Include="ViewModels\OrderInputModel.cs" />
     <Compile Include="ViewModels\ProductInputModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +191,14 @@
     <Content Include="Views\Shop\CreateCategory.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Shop\DeleteCategory.cshtml" />
+    <Content Include="Views\Product\DeleteProducts.cshtml" />
+    <Content Include="Views\Categories\Categories.cshtml" />
+    <Content Include="Views\Categories\CreateCategory.cshtml" />
+    <Content Include="Views\Delivery\Delivery.cshtml" />
+    <Content Include="Views\Delivery\CreateDelivery.cshtml" />
+    <Content Include="Views\Orders\Orders.cshtml" />
+    <Content Include="Views\Orders\CreateOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

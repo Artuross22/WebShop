@@ -20,22 +20,23 @@ namespace WebShop.Controllers
 
         public ActionResult Index()
         {
-            var db = new ShopContext();
+            var db = new ShopContext();                       
 
-            var products = db.Products.ToList();
+            var products = db.Products.ToList();             
             return View(products);
         }
 
         [HttpGet]
         public ActionResult Create()
+        
         {
             ViewBag.Categories = new SelectList(ShopContext.Categories, "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductInputModel model)
+        [ValidateAntiForgeryToken]   
+        public ActionResult Create(ProductInputModel model) 
         {
             if (ModelState.IsValid)
             {
@@ -49,5 +50,20 @@ namespace WebShop.Controllers
             }
             return View(model);
         }
+
+        public ActionResult DeleteProducts(int productId)
+        {
+            var db = new ShopContext();
+
+            var product = db.Products.Find(productId);
+            if (product == null)
+                return RedirectToAction("Products");
+            
+            db.Products.Remove(product);
+            db.SaveChanges();
+           return RedirectToAction("Index");
+        }
+
+
     }
 }
