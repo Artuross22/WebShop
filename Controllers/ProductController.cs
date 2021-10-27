@@ -25,7 +25,48 @@ namespace WebShop.Controllers
             using(var db = new ShopContext())
             {
                 var products = string.IsNullOrEmpty(query) ? db.Products.ToList() : db.Products.Where(p => p.Name.Contains(query)).ToList();
+
+                foreach(var product in products)
+                {
+                    product.Category = db.Categories.Find(product.CategoryId);
+                }
+
                 return View(products);
+            }
+        }
+
+        protected List<Product> Search()
+        {
+
+            return null;
+        }
+
+        public ActionResult Details(int? id)
+        {
+            using(var db = new ShopContext())
+            {
+                var product = db.Products.Find(id);
+                if (product == null)
+                    return HttpNotFound();
+
+                var productViewModel = new ProductDetailsViewModel();
+                InitializeProductDetailsViewModel(productViewModel, product);
+
+                return View(productViewModel);
+            }
+        }
+
+        protected void InitializeProductDetailsViewModel(ProductDetailsViewModel model, Product product)
+        {
+            model.Id = product.Id;
+            model.Name = product.Name;
+            model.Description = product.Description;
+            model.Price = product.Price;
+            model.Producer = product.Producer;
+
+            using(var db = new ShopContext())
+            {
+                model.Category = db.Categories.Find(product.CategoryId);
             }
         }
 

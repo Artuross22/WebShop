@@ -146,6 +146,7 @@
     <Compile Include="ViewModels\CategoryInputModel.cs" />
     <Compile Include="ViewModels\DeliveryInputModel.cs" />
     <Compile Include="ViewModels\OrderInputModel.cs" />
+    <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProductInputModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +200,7 @@
     <Content Include="Views\Delivery\CreateDelivery.cshtml" />
     <Content Include="Views\Orders\Orders.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
