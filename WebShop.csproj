@@ -146,8 +146,10 @@
     <Compile Include="ViewModels\CategoryInputModel.cs" />
     <Compile Include="ViewModels\DeliveryInputModel.cs" />
     <Compile Include="ViewModels\OrderInputModel.cs" />
-    <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
-    <Compile Include="ViewModels\ProductInputModel.cs" />
+    <Compile Include="ViewModels\Product\ProductDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductEditInputModel.cs" />
+    <Compile Include="ViewModels\Product\ProductInputModel.cs" />
+    <Compile Include="ViewModels\Product\ProductBaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\WebShopDb.mdf" />
@@ -201,7 +203,6 @@
     <Content Include="Views\Orders\Orders.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\EditProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>

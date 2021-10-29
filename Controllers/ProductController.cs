@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.DomainModels;
-using WebShop.ViewModels;
+using WebShop.ViewModels.Product;
 
 namespace WebShop.Controllers
 {
@@ -50,7 +50,9 @@ namespace WebShop.Controllers
                     return HttpNotFound();
 
                 var productViewModel = new ProductDetailsViewModel();
-                InitializeProductDetailsViewModel(productViewModel, product);
+                InitializeProductViewModel(productViewModel, product);
+                productViewModel.Id = product.Id;
+                productViewModel.Category = db.Categories.Find(product.CategoryId);
 
                 return View(productViewModel);
             }
@@ -65,42 +67,64 @@ namespace WebShop.Controllers
                 {
                     return HttpNotFound();
                 }
-                var products = db.Products.Find(productId);
-                if (products != null)
+
+                var product = db.Products.Find(productId);
+                if (product == null)
                 {
-                    return View(products);
+                    return HttpNotFound();
                 }
-                return HttpNotFound();
+
+                var categories = db.Categories.ToList();
+
+                var editModel = new ProductEditInputModel();
+                InitializeProductViewModel(editModel, product);
+                editModel.Id = product.Id;
+                editModel.Category = categories.FirstOrDefault(c => c.Id == product.CategoryId);
+
+                ViewBag.Categories = new SelectList(categories, "Id", "Name", editModel.CategoryId);
+                return View(editModel);
             }
-
-
         }
-        public ActionResult EditProduct(Product productId)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProduct(ProductEditInputModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             using (var db = new ShopContext())
             {
-
-                db.Entry(productId).State = EntityState.Modified;
+                var product = ConvertToProductDomainModel(model);
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-               
         }
 
-
-
-        protected void InitializeProductDetailsViewModel(ProductDetailsViewModel model, Product product)
+        protected Product ConvertToProductDomainModel(ProductEditInputModel model)
         {
-            model.Id = product.Id;
+            var product = new Product
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                Producer = model.Producer,
+                CategoryId = model.CategoryId
+            };
+
+            return product;
+        }
+
+        protected void InitializeProductViewModel<T>(T model, Product product)
+            where T : ProductBaseViewModel
+        {
             model.Name = product.Name;
             model.Description = product.Description;
             model.Price = product.Price;
             model.Producer = product.Producer;
-
-            using(var db = new ShopContext())
-            {
-                model.Category = db.Categories.Find(product.CategoryId);
-            }
+            model.CategoryId = product.CategoryId;
         }
 
         private string PrepareSeachQuery(string query)
