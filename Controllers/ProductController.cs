@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,30 +21,29 @@ namespace WebShop.Controllers
 
         public ActionResult Index(string query)
         {
-            query = PrepareSeachQuery(query);
-            
-            using(var db = new ShopContext())
-            {
-                var products = string.IsNullOrEmpty(query) ? db.Products.ToList() : db.Products.Where(p => p.Name.Contains(query)).ToList();
+            query = PrepareSeachQuery(query);         
+            var products = Search(query);
+            return View(products);
 
-                foreach(var product in products)
+        }
+
+        protected List<Product> Search(string query)
+        {
+            using (var db = new ShopContext())
+            {
+                var search = string.IsNullOrEmpty(query) ? db.Products.ToList() : db.Products.Where(p => p.Name.Contains(query) || p.Description.Contains(query) || p.Producer.Contains(query)).ToList();             
+                foreach (var product in search)
                 {
                     product.Category = db.Categories.Find(product.CategoryId);
                 }
-
-                return View(products);
+                return search;
             }
         }
-
-        protected List<Product> Search()
-        {
-
-            return null;
-        }
+     
 
         public ActionResult Details(int? id)
         {
-            using(var db = new ShopContext())
+            using (var db = new ShopContext())
             {
                 var product = db.Products.Find(id);
                 if (product == null)
@@ -55,6 +55,39 @@ namespace WebShop.Controllers
                 return View(productViewModel);
             }
         }
+
+        [HttpGet]
+        public ActionResult EditProduct(int? productId)
+        {
+            using (var db = new ShopContext())
+            {
+                if (productId == null)
+                {
+                    return HttpNotFound();
+                }
+                var products = db.Products.Find(productId);
+                if (products != null)
+                {
+                    return View(products);
+                }
+                return HttpNotFound();
+            }
+
+
+        }
+        public ActionResult EditProduct(Product productId)
+        {
+            using (var db = new ShopContext())
+            {
+
+                db.Entry(productId).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+               
+        }
+
+
 
         protected void InitializeProductDetailsViewModel(ProductDetailsViewModel model, Product product)
         {
