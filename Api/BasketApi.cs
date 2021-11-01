@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using WebShop.DomainModels;
@@ -15,7 +16,9 @@ namespace WebShop.Api
             {
                 using (var db = new ShopContext())
                 {
-                    return db.Baskets.Find(int.Parse(basketId.Value));
+                    var existingBasket = db.Baskets.Find(int.Parse(basketId.Value));
+                    existingBasket.BasketLines = existingBasket.BasketLines ?? new List<BasketLine>();
+                    return existingBasket;
                 }
             }
             else

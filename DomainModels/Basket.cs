@@ -10,5 +10,10 @@ namespace WebShop.DomainModels
         public int Id { get; set; }
 
         public ICollection<BasketLine> BasketLines { get; set; }
+
+        public Basket()
+        {
+            BasketLines = new List<BasketLine>();
+        }
     }
 }

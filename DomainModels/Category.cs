@@ -10,9 +10,5 @@ namespace WebShop.DomainModels
         public int Id { get; set; }
 
         public string Name { get; set; }
-
-        public ICollection<BasketLine> Products { get; set; }
-
-     
     }
 }
