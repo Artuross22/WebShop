@@ -52,5 +52,24 @@ namespace WebShop.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult ByProduct(int? productId)
+        {
+            using (var db = new ShopContext())
+            {
+                if (productId == null)
+                    return HttpNotFound();
+
+                var product = db.Products.Find(productId);
+                if (product == null)
+                    return HttpNotFound();
+
+                return View(product);
+            }
+        }
+
+
+
     }
 }

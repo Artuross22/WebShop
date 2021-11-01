@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebShop.DomainModels;
 using WebShop.ViewModels;
+using System.Data.Entity;
 
 namespace WebShop.Controllers
 {
@@ -29,7 +30,7 @@ namespace WebShop.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateDelivery(DeliveryInputModel model)  // ???
+        public ActionResult CreateDelivery(DeliveryInputModel model)  
         {
             if (ModelState.IsValid)
             {
@@ -53,11 +54,58 @@ namespace WebShop.Controllers
             db.Deliveries.Remove(delivery);
             db.SaveChanges();
             return RedirectToAction("Delivery");
+         }
 
+        [HttpGet]
+        public ActionResult Edit(int? deliveryId)
+        {
+            using(var db = new ShopContext())
+            {
+                if (deliveryId == null)
+                    return HttpNotFound();
 
+                var deliveri = db.Deliveries.Find(deliveryId);
+                if (deliveri == null)
+                    return HttpNotFound();
+
+                var editDelivery = new DeliveryInputModel();
+                InitializeDeliveryViewModel(editDelivery, deliveri);
+                editDelivery.Id = deliveri.Id;
+
+                return View(editDelivery);
+            }
 
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken] // ще раз повтори для  чого?)
+        public ActionResult Edit(DeliveryInputModel model )
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            using (var db = new  ShopContext())
+            { 
+                var delivery = ConvertToDeliveriVievModel(model);
+                db.Entry(delivery).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Delivery");
+            }
+        }
 
+        protected Delivery ConvertToDeliveriVievModel(DeliveryInputModel model)
+        {
+            var delivery = new Delivery
+            {
+                Id = model.Id,
+                Name = model.Name
+            };
+            return delivery;
+        }
+
+        public void InitializeDeliveryViewModel<T>(T modul, Delivery delivery )
+              where T : DeliveryInputModel
+        {
+            modul.Name = delivery.Name;         
+        }
 
 
 

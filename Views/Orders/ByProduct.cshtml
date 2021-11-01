@@ -1,0 +1,42 @@
+﻿@model WebShop.ViewModels.OrderInputModel
+
+@{
+    ViewBag.Title = "ByProduct";
+}
+
+<h2>ByProduct</h2>
+
+<div>
+    <h4>OrderInputModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -31,7 +31,10 @@ namespace WebShop.Controllers
         {
             using (var db = new ShopContext())
             {
-                var search = string.IsNullOrEmpty(query) ? db.Products.ToList() : db.Products.Where(p => p.Name.Contains(query) || p.Description.Contains(query) || p.Producer.Contains(query)).ToList();             
+                
+                var search = string.IsNullOrEmpty(query) ? db.Products.ToList(): db.Products.Where(p => p.Name.Contains(query) || p.Description.Contains(query) || p.Category.Name.Contains(query) || p.Producer.Contains(query)).ToList();   
+
+
                 foreach (var product in search)
                 {
                     product.Category = db.Categories.Find(product.CategoryId);
@@ -41,7 +44,7 @@ namespace WebShop.Controllers
         }
      
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id)   // передаеться айди 37
         {
             using (var db = new ShopContext())
             {
@@ -59,30 +62,32 @@ namespace WebShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditProduct(int? productId)
+        public ActionResult EditProduct(int? productId)  // передаю айди через Http
         {
-            using (var db = new ShopContext())
+            using (var db = new ShopContext())        // визиваю базу даних 
             {
-                if (productId == null)
+                if (productId == null)      // провірка на те . чи таке айди є 
+                {
+                    return HttpNotFound(); // якщо немає вибивай нот фаунд
+                }
+
+                var product = db.Products.Find(productId); // по айдишки з бази даних витягуємо  информацию яка прикріплена до цього айди (адидас.ціна =10. и ткд)
+                if (product == null)                      // якщо такої інформації немає / то нот фаунд
                 {
                     return HttpNotFound();
                 }
 
-                var product = db.Products.Find(productId);
-                if (product == null)
-                {
-                    return HttpNotFound();
-                }
+                var categories = db.Categories.ToList();      // передаємо сюди категорії (5)
 
-                var categories = db.Categories.ToList();
 
-                var editModel = new ProductEditInputModel();
-                InitializeProductViewModel(editModel, product);
-                editModel.Id = product.Id;
-                editModel.Category = categories.FirstOrDefault(c => c.Id == product.CategoryId);
-
-                ViewBag.Categories = new SelectList(categories, "Id", "Name", editModel.CategoryId);
+                var editModel = new ProductEditInputModel();        // Беремо базові назви з якими нам потрібно працювати (нейм.дескрипшин и ткд.)
+                InitializeProductViewModel(editModel, product);// передаємо в наш типа конструктор для ініціалізації . editModel = базові моделі які ми ініціалізуємо які прийдуть з product
+                editModel.Id = product.Id; //  добавляю айди 
+                editModel.Category = categories.FirstOrDefault(c => c.Id == product.CategoryId); // по айди воно підтягує категорію.()  прикручуємо сюди категорію / спорт і айди категорії
+                            
+                ViewBag.Categories = new SelectList(categories, "Id", "Name", editModel.CategoryId); // передаємо категорії які у  нас є (айди и имя категорії) і оприділену модель(все про бол) до категорії
                 return View(editModel);
+                //заполучаємо значення завдяки айди і повертаємо значення яке у нас було завдяки конструктору. і також даємо можливість вибрати категорію завдяки ViewBag.Categories = new SelectList
             }
         }
 
@@ -90,15 +95,15 @@ namespace WebShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditProduct(ProductEditInputModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            if (!ModelState.IsValid) 
+                return View(model);  // дивиться чи моделі було щось поміняно. якщо нічо не було поміняно повертає назат модель якщо було проходить дальше
 
-            using (var db = new ShopContext())
+            using (var db = new ShopContext()) //база даних підтягуеться
             {
-                var product = ConvertToProductDomainModel(model);
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var product = ConvertToProductDomainModel(model); // переформировка конструктора 
+                db.Entry(product).State = EntityState.Modified;   // сохранити модификаци
+                db.SaveChanges();     // сохроняем в базу даних
+                return RedirectToAction("Index"); // повернути индекс
             }
         }
 
@@ -117,8 +122,8 @@ namespace WebShop.Controllers
             return product;
         }
 
-        protected void InitializeProductViewModel<T>(T model, Product product)
-            where T : ProductBaseViewModel
+        protected void InitializeProductViewModel<T>(T model, Product product) // T model - тут стоїть дженерік який заміняє типізацію( стринг . инт. и ткд.) чому дженерик ?
+            where T : ProductBaseViewModel              // можна працювати тільки з ProductBaseViewModel     
         {
             model.Name = product.Name;
             model.Description = product.Description;

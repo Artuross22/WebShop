@@ -9,6 +9,9 @@ namespace WebShop.ViewModels
     public class DeliveryInputModel
     {
         [Required]
+        public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
     }
 }

@@ -52,6 +52,13 @@
             }
             @Html.DisplayFor(model => categoryName)
         </dd>
+        <dd>
+            @Html.ActionLink("Bay", "Orders" , "Orders")
+            @*@Html.ActionLink("Bay", "Orders", new { id = Model.Id })*@
+            @*@Html.ActionLink("Bay", "ByProduct", "ByProduct")*@
+            @*@Html.ActionLink("Bay", "ByProduct", new { id = Model.Id })*@
+            @*@Html.ActionLink("Bay", "ByProduct", "Orders", new { id = Model.Id })*@
+        </dd>
 
     </dl>
 </div>

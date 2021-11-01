@@ -204,6 +204,8 @@
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\EditProduct.cshtml" />
+    <Content Include="Views\Orders\ByProduct.cshtml" />
+    <Content Include="Views\Delivery\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
