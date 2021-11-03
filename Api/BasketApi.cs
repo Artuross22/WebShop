@@ -9,7 +9,7 @@ namespace WebShop.Api
 {
     public class BasketApi
     {
-        public static Basket GetCurrentBasket(HttpContextBase httpContext) // шо за хттп контекст ?
+        public Basket GetCurrentBasket(HttpContextBase httpContext) // шо за хттп контекст ?
         {
             var basketId = httpContext.Request.Cookies.Get(Constants.Basket.BasketId); // получаємо кук
             if (basketId != null)          
@@ -33,7 +33,19 @@ namespace WebShop.Api
             }
         }
 
-        protected static Basket CreateInitialBasket()
+        public void AddToBasket(BasketLine line, HttpContextBase httpContext)
+        {
+            var currentBasket = GetCurrentBasket(httpContext);
+
+            using (var db = new ShopContext())
+            {
+                var basket = db.Baskets.Find(currentBasket.Id);
+                basket.BasketLines.Add(line);
+                db.SaveChanges();
+            }
+        }
+
+        protected Basket CreateInitialBasket()
         {
             using (var db = new ShopContext())
             {

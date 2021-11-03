@@ -5,11 +5,8 @@
 
 }
 
-@*<h2>Details</h2>*@
-
-<link href="~/wwwroot/css/StyleSheet2.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/StyleSheet2.css" rel="stylesheet" type="text/css" />
 <h2 class="p-3 mb-2 bg-success text-white" style="text-align: center;">Details</h2>
-@*class="glyphicon glyphicon-user"*@
 
 <div>
    
@@ -61,18 +58,14 @@
         </dd>
 
         <div>
-            @using (Html.BeginForm("AddToBasket", "Basket", FormMethod.Post  ))
+            @using (Html.BeginForm("AddToBasket", "Basket", FormMethod.Post ))
             {
                 <input name="Quantity" type="number" step="1" min="0" max="1001" value="1" />
                 <input name="ProductId" type="hidden" value="@Model.Id" />
-                @*<input type="submit" value="Buy" />*@
+                @Html.AntiForgeryToken()
                 <button type="submit" class="btn btn-success">Buy</button>
-
-
-                //new { productId = Model.Id };
             }
         </div>
-
     </dl>
 </div>
 <p>

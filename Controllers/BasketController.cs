@@ -19,25 +19,42 @@ namespace WebShop.Controllers
             }
         }
 
-        public ActionResult Basket()          
+        public ActionResult Basket()
         {
-            var basket = BasketApi.GetCurrentBasket(HttpContext);
+            var basket = ApplicationContext.BasketApi.GetCurrentBasket(HttpContext);
+            basket.BasketLines = LoadBasketLines(basket.Id);
             return View(basket);
         }
 
-        [HttpGet]
-        public ActionResult AddToBasket()
-        {
-           
-            
-        }
-
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddToBasket(AddProductToBasketModel model)
         {
+            // 1. Створити баскет-лінію і заповнити її
+            // 2. Отримати поточний баскет
+            // 3. Зберегти баскет-лінію в поточний баскет
 
-            // please implement this method and configure redirect to Basket page
-            return RedirectToAction("Details", "Product");
+            var basketLine = new BasketLine
+            {
+                ProductId = model.ProductId,
+                Quantity = model.Quantity
+            };
+
+            ApplicationContext.BasketApi.AddToBasket(basketLine, HttpContext);
+            return RedirectToAction("Basket");
+        }
+
+        protected List<BasketLine> LoadBasketLines(int basketId)
+        {
+            using(var db = new ShopContext())
+            {
+                var basketLines = db.BasketLines.Where(l => l.BasketId == basketId).ToList();
+                foreach(var line in basketLines)
+                {
+                    line.Product = db.Products.Find(line.ProductId);
+                }
+                return basketLines;
+            }
         }
     }
 }
