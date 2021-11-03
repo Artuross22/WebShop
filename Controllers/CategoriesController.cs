@@ -23,6 +23,7 @@ namespace WebShop.Controllers
         {
             var categories = ShopContext.Categories.ToList();
             return View(categories);
+         
         }
 
         [HttpGet]

@@ -2,19 +2,26 @@
 
 @{
     ViewBag.Title = "Details";
+
 }
 
-<h2>Details</h2>
+@*<h2>Details</h2>*@
+
+<link href="~/wwwroot/css/StyleSheet2.css" rel="stylesheet" type="text/css" />
+<h2 class="p-3 mb-2 bg-success text-white" style="text-align: center;">Details</h2>
+@*class="glyphicon glyphicon-user"*@
 
 <div>
-    <h4>ProductDetailsViewModel</h4>
+   
+    
     <hr />
-    <dl class="dl-horizontal">
+
+    <dl class="list-counter-square">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
-        <dd>
+        <dd class="text-danger">
             @Html.DisplayFor(model => model.Name)
         </dd>
 
@@ -22,7 +29,7 @@
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
-        <dd>
+        <dd class="text-danger" >
             @Html.DisplayFor(model => model.Description)
         </dd>
 
@@ -30,7 +37,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
 
-        <dd>
+        <dd class="text-danger">
             @Html.DisplayFor(model => model.Price)
         </dd>
 
@@ -38,7 +45,7 @@
             @Html.DisplayNameFor(model => model.Producer)
         </dt>
 
-        <dd>
+        <dd class="text-danger">
             @Html.DisplayFor(model => model.Producer)
         </dd>
 
@@ -46,7 +53,7 @@
             @Html.DisplayNameFor(model => model.Category)
         </dt>
 
-        <dd>
+        <dd class="text-danger">
             @{
                 var categoryName = Model.Category?.Name ?? string.Empty;
             }
@@ -54,11 +61,15 @@
         </dd>
 
         <div>
-            @using(Html.BeginForm("AddToBasket", "Basket", FormMethod.Post))
+            @using (Html.BeginForm("AddToBasket", "Basket", FormMethod.Post  ))
             {
-                <input name="Quantity" type="number" />
+                <input name="Quantity" type="number" step="1" min="0" max="1001" value="1" />
                 <input name="ProductId" type="hidden" value="@Model.Id" />
-                <input type="submit" value="Buy" />
+                @*<input type="submit" value="Buy" />*@
+                <button type="submit" class="btn btn-success">Buy</button>
+
+
+                //new { productId = Model.Id };
             }
         </div>
 

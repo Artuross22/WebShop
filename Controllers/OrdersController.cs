@@ -68,8 +68,6 @@ namespace WebShop.Controllers
                 return View(product);
             }
         }
-
-
-
     }
+
 }

@@ -24,7 +24,6 @@ namespace WebShop.Controllers
             query = PrepareSeachQuery(query);
             var products = Search(query);
             return View(products);
-
         }
 
         protected List<Product> Search(string query)

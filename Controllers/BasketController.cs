@@ -11,15 +11,32 @@ namespace WebShop.Controllers
 {
     public class BasketController : Controller
     {
-        public ActionResult Basket()
+        protected ShopContext ShopContext
         {
-            var basket = BasketApi.GetCurrentBasket(HttpContext);
-            basket.BasketLines = basket.BasketLines ?? new List<BasketLine>();
+            get
+            {
+                return new ShopContext();
+            }
+        }
+
+        public ActionResult Basket()          
+        {
+            var basket = BasketApi.GetCurrentBasket(HttpContext);                // метод для отримання  айди(кука) . назва через константу Constants
+            basket.BasketLines = basket.BasketLines ?? new List<BasketLine>();  // що тут відбувається ?
             return View(basket);
         }
 
+        [HttpGet]
+        public ActionResult AddToBasket()
+        {
+           
+            
+        }
+
+
         public ActionResult AddToBasket(AddProductToBasketModel model)
         {
+
             // please implement this method and configure redirect to Basket page
             return RedirectToAction("Details", "Product");
         }

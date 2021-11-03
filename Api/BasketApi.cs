@@ -8,14 +8,14 @@ namespace WebShop.Api
 {
     public class BasketApi
     {
-        public static Basket GetCurrentBasket(HttpContextBase httpContext)
+        public static Basket GetCurrentBasket(HttpContextBase httpContext) // шо за хттп контекст ?
         {
-            var basketId = httpContext.Request.Cookies.Get(Constants.Basket.BasketId);
-            if (basketId != null)
+            var basketId = httpContext.Request.Cookies.Get(Constants.Basket.BasketId); // получаємо кук
+            if (basketId != null)          
             {
                 using (var db = new ShopContext())
                 {
-                    return db.Baskets.Find(int.Parse(basketId.Value));
+                    return db.Baskets.Find(int.Parse(basketId.Value));        // кук стринговый по дефолту . переводимо в интовий 
                 }
             }
             else
