@@ -21,8 +21,7 @@ namespace WebShop.Controllers
 
         public ActionResult Basket()          
         {
-            var basket = BasketApi.GetCurrentBasket(HttpContext);                // метод для отримання  айди(кука) . назва через константу Constants
-            basket.BasketLines = basket.BasketLines ?? new List<BasketLine>();  // що тут відбувається ?
+            var basket = BasketApi.GetCurrentBasket(HttpContext);
             return View(basket);
         }
 
