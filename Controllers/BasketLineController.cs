@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.DomainModels;
-using WebShop.ViewModels.BasketLine;
+using WebShop.ViewModels.BasketLines;
 
 namespace WebShop.Controllers
 {

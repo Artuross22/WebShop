@@ -52,18 +52,18 @@ namespace WebShop.Controllers
             }
         }
 
-        public ActionResult Details(int? id)   // передаеться айди 37
+        public ActionResult Details(int? id)   // передається айди продукту 
         {
-            using (var db = new ShopContext())
+            using (var db = new ShopContext()) // визивається контекст 
             {
-                var product = db.Products.Find(id);
-                if (product == null)
+                var product = db.Products.Find(id);  // витягуеться продукт по айди 
+                if (product == null)               // ящко продукта немає вибиває  HttpNotFound
                     return HttpNotFound();
 
-                var productViewModel = new ProductDetailsViewModel();
-                InitializeProductViewModel(productViewModel, product);
-                productViewModel.Id = product.Id;
-                productViewModel.Category = db.Categories.Find(product.CategoryId);
+                var productViewModel = new ProductDetailsViewModel();   // создається вюшна модель 
+                InitializeProductViewModel(productViewModel, product); // передається . вюшна модель і продукт в конструктор 
+                productViewModel.Id = product.Id;                     // зводиться вюшна(айди) модель і  продукт. по йади
+                productViewModel.Category = db.Categories.Find(product.CategoryId);       // підтягуємо категорію до цього айди 
 
                 return View(productViewModel);
             }

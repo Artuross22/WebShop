@@ -159,6 +159,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BasketLine\BasketLineInputModel.cs" />
     <Compile Include="ViewModels\Basket\AddProductToBasketModel.cs" />
+    <Compile Include="ViewModels\Basket\BacketViewModel.cs" />
     <Compile Include="ViewModels\CategoryInputModel.cs" />
     <Compile Include="ViewModels\DeliveryInputModel.cs" />
     <Compile Include="ViewModels\OrderInputModel.cs" />
@@ -226,6 +227,7 @@
     <Content Include="Views\Basket\Basket.cshtml" />
     <Content Include="Views\BasketLine\BasketLine.cshtml" />
     <Content Include="Views\BasketLine\CreateBasketLine.cshtml" />
+    <Content Include="Views\Basket\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

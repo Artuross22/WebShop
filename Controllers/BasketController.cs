@@ -21,28 +21,44 @@ namespace WebShop.Controllers
 
         public ActionResult Basket()
         {
-            var basket = ApplicationContext.BasketApi.GetCurrentBasket(HttpContext);
-            basket.BasketLines = LoadBasketLines(basket.Id);
-            return View(basket);
+            using (var db = new ShopContext())
+            {
+                var basket = ApplicationContext.BasketApi.GetCurrentBasket(HttpContext);
+                basket.BasketLines = LoadBasketLines(basket.Id);
+
+                var viewModels = new BacketViewModel();
+                InitializeBasketView(viewModels, basket);
+                viewModels.Id = basket.Id;
+                return View(viewModels);
+            }
         }
+
+        protected void InitializeBasketView<T>(T model, Basket basket)
+            where T : BacketViewModel
+        {
+            model.Id = basket.Id;
+            model.BasketLines = basket.BasketLines;
+        }
+            
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddToBasket(AddProductToBasketModel model)
+        public ActionResult AddToBasket(AddProductToBasketModel model)  // Передається продукт(айди продукту) і кількість 
         {
-            // 1. Створити баскет-лінію і заповнити її
+          
             // 2. Отримати поточний баскет
             // 3. Зберегти баскет-лінію в поточний баскет
 
-            var basketLine = new BasketLine
+            var basketLine = new BasketLine  // Створити баскет-лінію і заповнити її . передаємо інфу
             {
-                ProductId = model.ProductId,
+                ProductId = model.ProductId, 
                 Quantity = model.Quantity
             };
 
-            ApplicationContext.BasketApi.AddToBasket(basketLine, HttpContext);
-            return RedirectToAction("Basket");
-        }
+            ApplicationContext.BasketApi.AddToBasket(basketLine, HttpContext); //Создаємо лінію.  Викликаємо клас  BasketApi метод AddToBasket і передаємо йому (basketLine, HttpContext)
+                                                                                 
+            return RedirectToAction("Basket");                                 //и передаємо йому  = баскет лінію(продукт і кількість)  такоже HttpContext(инфу з нету (кук))
+        }                                                                    // поки є конект з сервером буде відкритий доступ до HttpContext
 
         protected List<BasketLine> LoadBasketLines(int basketId)
         {
@@ -55,6 +71,23 @@ namespace WebShop.Controllers
                 }
                 return basketLines;
             }
+        }
+
+        public ActionResult DeleteBasket(int id)
+        {
+            using (var db = new ShopContext())
+            {
+                var backet = db.BasketLines.Find(id);
+                if (backet == null)
+                    return HttpNotFound();
+
+                db.BasketLines.Remove(backet);
+                db.SaveChanges();
+                return RedirectToAction("Basket");
+
+            }
+
+           
         }
     }
 }
