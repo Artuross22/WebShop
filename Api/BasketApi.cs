@@ -9,11 +9,10 @@ namespace WebShop.Api
 {
     public class BasketApi
     {
-        //
-        public Basket GetCurrentBasket(HttpContextBase httpContext) // информация з інтернету наш (кук)
+        public Basket GetCurrentBasket() // шо за хтт
         {
-            var basketId = httpContext.Request.Cookies.Get(Constants.Basket.BasketId); // получаємо кук
-            if (basketId != null)     // якщо кук є . то попадаємо в юзинг     
+            var basketId = ApplicationContext.HttpContext.Request.Cookies.Get(Constants.Basket.BasketId); // получаємо кук
+            if (basketId != null)          
             {
                 using (var db = new ShopContext()) // визиваємо шоп контекст 
                 {
@@ -30,14 +29,14 @@ namespace WebShop.Api
                 {
                     Expires = DateTime.Now.AddDays(7)
                 };
-                httpContext.Response.Cookies.Add(cookie);
+                ApplicationContext.HttpContext.Response.Cookies.Add(cookie);
                 return initialBasket;
             }
         }
 
-        public void AddToBasket(BasketLine line, HttpContextBase httpContext) // приходить наша лінія і інфа з нету(кук)
+        public void AddToBasket(BasketLine line)
         {
-            var currentBasket = GetCurrentBasket(httpContext); // визиваємо метод для отрмання кука(айди)
+            var currentBasket = GetCurrentBasket();
 
             using (var db = new ShopContext())
             {

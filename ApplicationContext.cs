@@ -6,9 +6,15 @@ using WebShop.Api;
 
 namespace WebShop
 {
-    public class ApplicationContext
+    public static class ApplicationContext
     {
-        public static HttpContextBase HttpContext { get; set; }
+        public static HttpContextBase HttpContext
+        {
+            get
+            {
+                return new HttpContextWrapper(System.Web.HttpContext.Current);
+            }
+        }
 
         public static BasketApi BasketApi
         {
