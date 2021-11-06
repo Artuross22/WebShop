@@ -131,6 +131,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\BasketLineController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -159,8 +160,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BasketLine\BasketLineInputModel.cs" />
     <Compile Include="ViewModels\Basket\AddProductToBasketModel.cs" />
-    <Compile Include="ViewModels\Basket\BacketViewModel.cs" />
+    <Compile Include="ViewModels\Basket\BasketViewModel.cs" />
     <Compile Include="ViewModels\CategoryInputModel.cs" />
+    <Compile Include="ViewModels\Checkout\CheckoutDataInputModel.cs" />
+    <Compile Include="ViewModels\Client\Address.cs" />
+    <Compile Include="ViewModels\Client\ClientData.cs" />
     <Compile Include="ViewModels\DeliveryInputModel.cs" />
     <Compile Include="ViewModels\OrderInputModel.cs" />
     <Compile Include="ViewModels\Product\ProductDetailsViewModel.cs" />
@@ -228,6 +232,8 @@
     <Content Include="Views\BasketLine\BasketLine.cshtml" />
     <Content Include="Views\BasketLine\CreateBasketLine.cshtml" />
     <Content Include="Views\Basket\Delete.cshtml" />
+    <Content Include="Views\Basket\_BasketLine.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

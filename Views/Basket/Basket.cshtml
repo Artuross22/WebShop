@@ -1,4 +1,4 @@
-﻿@model WebShop.ViewModels.Basket.BacketViewModel
+﻿@model WebShop.ViewModels.Basket.BasketViewModel
 
 
 @{
@@ -21,23 +21,10 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.BasketLines) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.ProductId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Product.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Quantity)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "DeleteBasket", new { id = item.Id })
-    </td>
-</tr>
-}
-
+    @foreach (var item in Model.BasketLines)
+    {
+        @Html.Partial("_BasketLine", item)
+    }
 </table>
+
+@Html.ActionLink("Buy", "Index", "Checkout")
