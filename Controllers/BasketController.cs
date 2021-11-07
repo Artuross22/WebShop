@@ -55,10 +55,9 @@ namespace WebShop.Controllers
                 Quantity = model.Quantity
             };
 
-            ApplicationContext.BasketApi.AddToBasket(basketLine, HttpContext); //Создаємо лінію.  Викликаємо клас  BasketApi метод AddToBasket і передаємо йому (basketLine, HttpContext)
-                                                                                 
-            return RedirectToAction("Basket");                                 //и передаємо йому  = баскет лінію(продукт і кількість)  такоже HttpContext(инфу з нету (кук))
-        }                                                                    // поки є конект з сервером буде відкритий доступ до HttpContext
+            ApplicationContext.BasketApi.AddToBasket(basketLine);
+            return RedirectToAction("Basket");
+        }
 
         protected List<BasketLine> LoadBasketLines(int basketId)
         {
