@@ -9,7 +9,12 @@ namespace WebShop.Api
 {
     public class BasketApi
     {
+<<<<<<< Updated upstream
         public Basket GetCurrentBasket() // шо за хтт
+=======
+        //
+        public Basket GetCurrentBasket(HttpContextBase httpContext) // информация з браузера  наш (кук)
+>>>>>>> Stashed changes
         {
             var basketId = ApplicationContext.HttpContext.Request.Cookies.Get(Constants.Basket.BasketId); // получаємо кук
             if (basketId != null)          
