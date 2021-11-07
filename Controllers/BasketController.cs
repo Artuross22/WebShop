@@ -23,10 +23,10 @@ namespace WebShop.Controllers
         {
             using (var db = new ShopContext())
             {
-                var basket = ApplicationContext.BasketApi.GetCurrentBasket();
+                var basket = ApplicationContext.BasketApi.GetCurrentBasket(HttpContext);
                 basket.BasketLines = LoadBasketLines(basket.Id);
 
-                var viewModels = new BasketViewModel();
+                var viewModels = new BacketViewModel();
                 InitializeBasketView(viewModels, basket);
                 viewModels.Id = basket.Id;
                 return View(viewModels);
@@ -34,7 +34,7 @@ namespace WebShop.Controllers
         }
 
         protected void InitializeBasketView<T>(T model, Basket basket)
-            where T : BasketViewModel
+            where T : BacketViewModel
         {
             model.Id = basket.Id;
             model.BasketLines = basket.BasketLines;
