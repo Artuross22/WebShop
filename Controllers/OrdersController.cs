@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebShop.Api;
 using WebShop.DomainModels;
 using WebShop.ViewModels;
 
@@ -53,21 +54,22 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult ByProduct(int? productId)
-        {
-            using (var db = new ShopContext())
-            {
-                if (productId == null)
-                    return HttpNotFound();
+        //[HttpGet]
+        //public ActionResult PlaceOrder()
+        //{
+        //    var basket = ApplicationContext.BasketApi.GetCurrentBasket();
+        //    if (basket == null)
+        //        return HttpNotFound();
 
-                var product = db.Products.Find(productId);
-                if (product == null)
-                    return HttpNotFound();
+        //    //using (var db = new ShopContext())
+        //    //{
+        //    //    var basket = db.Products.Find(productId);
+        //    //    if (product == null)
+        //    //        return HttpNotFound();
 
-                return View(product);
-            }
-        }
+        //    //    return View(product);
+        //    //}
+        //}
     }
 
 }
