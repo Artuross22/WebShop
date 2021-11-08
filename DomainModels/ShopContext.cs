@@ -8,9 +8,7 @@ namespace WebShop.DomainModels
 {
     public class ShopContext : DbContext
     {
-       public  ShopContext() : base("ShopDb") { }
-
-        public DbSet<Address> Addresses { get; set; }
+        public ShopContext() : base("ShopDb") { }
 
         public DbSet<Basket> Baskets { get; set; }
 

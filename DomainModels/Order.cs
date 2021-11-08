@@ -13,11 +13,11 @@ namespace WebShop.DomainModels
 
         public int? DeliveryId { get; set; }
 
-        public int? AddressId { get; set; }
+        public string ClientData { get; set; }
+
+        public string ClientAddress { get; set; }
 
         public Delivery Delivery { get; set; }
-
-        public Address Address { get; set; }
 
         public ICollection<OrderLine> OrderLines { get; set; }
     }
