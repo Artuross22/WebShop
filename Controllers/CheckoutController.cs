@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.DomainModels;
+using WebShop.ViewModels;
 using WebShop.ViewModels.Basket;
 using WebShop.ViewModels.Checkout;
 
@@ -16,33 +17,32 @@ namespace WebShop.Controllers
         {
             using (var db = new ShopContext())
             {
-                var basket = ApplicationContext.BasketApi.GetCurrentBasket();
-                basket.BasketLines = LoadBasketLines(basket.Id);
+                var basket = ApplicationContext.BasketApi.GetCurrentBasket(true);
 
-                var viewModels = new CheckoutDataInputModel();
-                InitializeBasketView(viewModels, basket);
-                viewModels.Id = basket.Id;
+                var viewModel = new CheckoutDataInputModel();
+                InitializeBasketView(viewModel, basket);
 
                 ViewBag.Deliveries = new SelectList(db.Deliveries.ToList(), "Id", "Name");
-                return View(viewModels);             
+                return View(viewModel);
             }
         }
+
         protected void InitializeBasketView<T>(T model, Basket basket)
            where T : CheckoutDataInputModel
         {
-            model.Id = basket.Id;
-            model.BasketLines = basket.BasketLines;
-        }
-        protected List<BasketLine> LoadBasketLines(int basketId)
-        {
-            using (var db = new ShopContext())
+            model.BasketLines = new List<BasketLineModel>();
+            foreach(var line in basket.BasketLines)
             {
-                var basketLines = db.BasketLines.Where(l => l.BasketId == basketId).ToList();
-                foreach (var line in basketLines)
+                model.BasketLines.Add(new BasketLineModel
                 {
-                    line.Product = db.Products.Find(line.ProductId);
-                }
-                return basketLines;
+                    Id = line.Id,
+                    ProductId = line.ProductId,
+                    Quantity = line.Quantity,
+                    BasketId = line.BasketId,
+                    Product = line.Product,
+                    Basket = line.Basket,
+                    TotalPrice = line.Product.Price * line.Quantity
+                });
             }
         }
 
@@ -51,8 +51,14 @@ namespace WebShop.Controllers
         {
             using (var db = new ShopContext())
             {
-                ViewBag.Deliveries = new SelectList(db.Deliveries.ToList(), "Id", "Name");
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    InitializeBasketView(model, ApplicationContext.BasketApi.GetCurrentBasket(true));
+                    ViewBag.Deliveries = new SelectList(db.Deliveries.ToList(), "Id", "Name");
+                    return View(model);
+                }
+
+                return RedirectToAction("PlaceOrder", "Orders", model);
             }
         }
     }

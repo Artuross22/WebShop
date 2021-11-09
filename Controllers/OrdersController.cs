@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebShop.Api;
 using WebShop.DomainModels;
 using WebShop.ViewModels;
+using WebShop.ViewModels.Checkout;
 
 namespace WebShop.Controllers
 {
@@ -54,22 +55,13 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public ActionResult PlaceOrder()
-        //{
-        //    var basket = ApplicationContext.BasketApi.GetCurrentBasket();
-        //    if (basket == null)
-        //        return HttpNotFound();
+        public ActionResult PlaceOrder(CheckoutDataInputModel dataModel)
+        {
+            var basket = ApplicationContext.BasketApi.GetCurrentBasket();
+            if (basket == null)
+                return HttpNotFound();
 
-        //    //using (var db = new ShopContext())
-        //    //{
-        //    //    var basket = db.Products.Find(productId);
-        //    //    if (product == null)
-        //    //        return HttpNotFound();
-
-        //    //    return View(product);
-        //    //}
-        //}
+            ApplicationContext.OrderApi.SaveOrder(order);
+        }
     }
-
 }

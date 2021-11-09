@@ -1,4 +1,4 @@
-﻿@model WebShop.DomainModels.BasketLine
+﻿@model WebShop.ViewModels.BasketLineModel
 
 <tr>
     <td>
@@ -11,7 +11,7 @@
         @Html.DisplayFor(model => model.Quantity)
     </td>
     <td>
-        @Html.DisplayFor(model => model.Product.Price)
+        @Html.DisplayFor(model => model.TotalPrice)
     </td>
     <td>
         @Html.ActionLink("Delete", "DeleteBasket", new { id = Model.Id })

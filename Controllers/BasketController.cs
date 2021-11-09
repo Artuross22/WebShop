@@ -23,8 +23,7 @@ namespace WebShop.Controllers
         {
             using (var db = new ShopContext())
             {
-                var basket = ApplicationContext.BasketApi.GetCurrentBasket();
-                basket.BasketLines = LoadBasketLines(basket.Id);
+                var basket = ApplicationContext.BasketApi.GetCurrentBasket(true);
 
                 var viewModels = new BasketViewModel();
                 InitializeBasketView(viewModels, basket);
@@ -57,19 +56,6 @@ namespace WebShop.Controllers
 
             ApplicationContext.BasketApi.AddToBasket(basketLine);
             return RedirectToAction("Basket");
-        }
-
-        protected List<BasketLine> LoadBasketLines(int basketId)
-        {
-            using(var db = new ShopContext())
-            {
-                var basketLines = db.BasketLines.Where(l => l.BasketId == basketId).ToList();
-                foreach(var line in basketLines)
-                {
-                    line.Product = db.Products.Find(line.ProductId);
-                }
-                return basketLines;
-            }
         }
 
         public ActionResult DeleteBasket(int id)

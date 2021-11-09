@@ -22,7 +22,7 @@
                 Quantity
             </th>
             <th>
-                Price
+                Total Price
             </th>
             <th></th>
         </tr>
@@ -38,22 +38,11 @@
     </div>
 
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            @Html.DropDownListFor(model => model.DeliveryId, deliveries, "Select delivery")
-        </button>
+        @Html.DropDownListFor(model => model.DeliveryId, deliveries, "Select delivery")
     </div>
-
 
     <hr />
-    <div>
-        @*@foreach (var item in Model.BasketLines)
-            {
-                @Html.DisplayFor(modelItem => item.Product)
-            }*@
-    </div>
     <input type="submit" value="Place order" />
-
-
 }
 
 
