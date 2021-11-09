@@ -26,5 +26,9 @@
         @Html.Partial("_BasketLine", item)
     }
 </table>
-
-@Html.ActionLink("Buy", "Index", "Checkout")
+<div>
+    @using(Html.BeginForm("Index", "Checkout", FormMethod.Get))
+     {
+       <button type="submit" class="btn btn-success">Buy</button>
+     }
+</div>

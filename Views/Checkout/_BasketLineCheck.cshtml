@@ -1,0 +1,19 @@
+﻿@model WebShop.DomainModels.BasketLine
+
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.ProductId)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Product.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Quantity)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Product.Price)
+    </td>
+    <td>
+        @Html.ActionLink("Delete", "DeleteBasket", new { id = Model.Id })
+    </td>
+</tr>

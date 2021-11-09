@@ -234,6 +234,7 @@
     <Content Include="Views\Basket\Delete.cshtml" />
     <Content Include="Views\Basket\_BasketLine.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\_BasketLineCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

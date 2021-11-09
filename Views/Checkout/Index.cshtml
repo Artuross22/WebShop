@@ -5,20 +5,55 @@
     var deliveries = ViewBag.Deliveries as SelectList;
 }
 
+<link href="~/Content/css/StyleSheet2.css" rel="stylesheet" type="text/css" />
 <h2>Checkout</h2>
+
 @using (Html.BeginForm()) // те ж саме, що і BeginForm("Index", "Checkout", FormMethod.Post)
 {
-    <div>
-        @Html.EditorFor(model => model.ClientData)
+    <table class="table table-bordered table-dark">
+        <tr>
+            <th>
+                Product ID
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.BasketLines)
+        {
+            @Html.Partial("_BasketLineCheck", item)
+        }
+    </table>
+    <div class="row">
+        <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0"> @Html.EditorFor(model => model.ClientData)</div>
+        <div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0"> @Html.EditorFor(model => model.ClientAddress)</div>
     </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @Html.DropDownListFor(model => model.DeliveryId, deliveries, "Select delivery")
+        </button>
+    </div>
+
+
     <hr />
     <div>
-        @Html.EditorFor(model => model.ClientAddress)
+        @*@foreach (var item in Model.BasketLines)
+            {
+                @Html.DisplayFor(modelItem => item.Product)
+            }*@
     </div>
-    <hr />
-    <div>
-        @Html.DropDownListFor(model => model.DeliveryId, deliveries, "Select delivery")
-    </div>
-    <hr />
     <input type="submit" value="Place order" />
+
+
 }
+
+
