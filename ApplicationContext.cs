@@ -23,5 +23,13 @@ namespace WebShop
                 return new BasketApi();
             }
         }
+
+        public static OrderApi OrderApi
+        {
+            get
+            {
+                return new OrderApi();
+            }
+        }
     }
 }

@@ -20,5 +20,10 @@ namespace WebShop.DomainModels
         public Delivery Delivery { get; set; }
 
         public ICollection<OrderLine> OrderLines { get; set; }
+
+        public Order()
+        {
+            OrderLines = new List<OrderLine>();
+        }
     }
 }

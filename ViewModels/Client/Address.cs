@@ -22,5 +22,10 @@ namespace WebShop.ViewModels.Client
 
      
         public int? ApartmentNumber { get; set; }
+
+        public override string ToString()
+        {
+            return string.Join(" | ", Country, City, Street, HouseNumber, ApartmentNumber);
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace WebShop.ViewModels.Client
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+
+        public override string ToString()
+        {
+            return string.Join(", ", Name, Email, PhoneNumber);
+        }
     }
 }

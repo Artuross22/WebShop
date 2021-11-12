@@ -236,6 +236,7 @@
     <Content Include="Views\Basket\_BasketLine.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Checkout\_BasketLineCheck.cshtml" />
+    <Content Include="Views\Orders\OrderSaved.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -53,6 +53,17 @@ namespace WebShop.Api
             }
         }
 
+        public void ClearCurrentBasket()
+        {
+            var basketId = ApplicationContext.HttpContext.Request.Cookies.Get(Constants.Basket.BasketId); // получаємо кук
+            if (basketId != null)
+            {
+                basketId.Expires = DateTime.Now.AddSeconds(1);
+                ApplicationContext.HttpContext.Response.Cookies.Add(basketId);
+            }
+                
+        }
+
         protected Basket CreateInitialBasket()
         {
             using (var db = new ShopContext())

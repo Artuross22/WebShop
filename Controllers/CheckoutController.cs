@@ -20,14 +20,14 @@ namespace WebShop.Controllers
                 var basket = ApplicationContext.BasketApi.GetCurrentBasket(true);
 
                 var viewModel = new CheckoutDataInputModel();
-                InitializeBasketView(viewModel, basket);
+                InitializeBasketLines(viewModel, basket);
 
                 ViewBag.Deliveries = new SelectList(db.Deliveries.ToList(), "Id", "Name");
                 return View(viewModel);
             }
         }
 
-        protected void InitializeBasketView<T>(T model, Basket basket)
+        protected void InitializeBasketLines<T>(T model, Basket basket)
            where T : CheckoutDataInputModel
         {
             model.BasketLines = new List<BasketLineModel>();
@@ -53,12 +53,13 @@ namespace WebShop.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    InitializeBasketView(model, ApplicationContext.BasketApi.GetCurrentBasket(true));
+                    InitializeBasketLines(model, ApplicationContext.BasketApi.GetCurrentBasket(true));
                     ViewBag.Deliveries = new SelectList(db.Deliveries.ToList(), "Id", "Name");
                     return View(model);
                 }
 
-                return RedirectToAction("PlaceOrder", "Orders", model);
+                TempData["checkoutData"] = model;
+                return RedirectToAction("PlaceOrder", "Orders");
             }
         }
     }
